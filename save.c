@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:40:09 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/05 23:41:17 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/05 17:24:58 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,65 +46,48 @@ void buf_scroll(char *buf, size_t i)
 	}
 }
 
-void	ft_free(char **to_free)
-{
-	if(to_free != NULL)
-	{
-		free(*to_free);
-	}
-	*to_free = NULL;
-}
-
 char	*get_next_line(int fd)
 {
 	char 			*line;
 	size_t			i = 0;
-	size_t			n = 0;
+	static size_t	n = 0;
 	static char 	*buf = NULL;
 	// static int		counter = 0;
 	
 	// if(counter++ == 5)
 	// 	return NULL;
 
-	// printf("\nc: %d\n", counter++);
-	line = NULL;
 	if (buf == NULL)
 	{
-		// printf("malloc buf\n");
 		buf = malloc(BUFFER_SIZE + 1);
-		buf[BUFFER_SIZE] = '\0';
+		buf[BUFFER_SIZE + 1] = '\0';
 	}
 	if (*buf == '\0')
-	{
 		n = get_buf(buf, fd);
-		// printf("n: %zu\n", n);
-		if (n <= 0 && buf != NULL)
-		{
-			// printf("free 82\n");
-			ft_free(&buf);
-			return (NULL);
-		}
-	}
-	while(buf[i] != '\n' && buf[i+1])
+	// printf("\nread %s\n", buf);
+	// return (buf);
+	while(buf[i] != '\n' && buf[i])
 		i++;
-	// printf("\ni: %zu\n", i);
-	line = ft_substr(buf, 0, i+1);
-	buf_scroll(buf, i + 1);
-	if (line[i] == '\n')
-		return (line);
-	if (n < BUFFER_SIZE && n != 0)
-		return (line);
-	line = ft_strjoin(line, get_next_line(fd));
-	// printf("line: %s\n", line);
+	// printf("\nstart %zu\ti %zu\n", start, i);
 	
-	// printf("\nread %d", buf == NULL ? 1 : 0);
-	if (n <= BUFFER_SIZE && buf != NULL)
+	line = ft_substr(buf, 0, i+1);
+	// i++;
+	// printf("line: %s\n", line);
+	buf_scroll(buf, i + 1);
+	// printf("i: %zu", i);
+
+	if (line[i] != '\n' && line[i] == '\0') //when \n is not in the buffer
 	{
-		// printf("free 103\n");
-		ft_free(&buf);
+		// printf("\n %d:", counter);
+		line = ft_strjoin(line, get_next_line(fd));
+	}
+	
+	if (n < BUFFER_SIZE && !buf)
+	{
+		free(buf);
+		buf = NULL;
 	}
 
-	// system("leaks main | grep \"leaked bytes\"");
 	return (line);
 }
 
@@ -114,7 +97,7 @@ char	*get_next_line(int fd)
 // 	int	c = 0;
 // 	// char s[6] = "Hallo";
 
-// 	printf("r: %s", get_next_line(0));
+// 	printf("\nr: %s", get_next_line(0));
 // 	printf("r: %s", get_next_line(0));
 // 	// printf("r: %s", get_next_line(0));
 // 	// printf("r: %s", get_next_line(0));
@@ -123,6 +106,6 @@ char	*get_next_line(int fd)
 // 	// buf_scroll(s, 2);
 // 	// printf("%s", s);
 	
-	
+
 // 	return (0);
 // }

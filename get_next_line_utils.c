@@ -6,11 +6,14 @@
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 14:21:41 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/05 16:03:07 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/05 22:48:02 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "./get_next_line.h"
+
+
+void	ft_free(void *to_free);
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -20,8 +23,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len_s2;
 	char	*ret;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
+	if (s2 == NULL)
+		return (s1);
 	i = 0;
 	ret = NULL;
 	len_s1 = ft_strlen(s1);
@@ -42,8 +45,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		i++;
 	}
 	ret[len] = '\0';
-	free(s1);
-	free(s2);
+	ft_free(&s1);
+	ft_free(&s2);
 	return (ret);
 }
 
