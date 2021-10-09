@@ -6,14 +6,11 @@
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 14:21:41 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/05 22:48:02 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/09 14:13:13 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "./get_next_line.h"
-
-
-void	ft_free(void *to_free);
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -23,10 +20,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	len_s2;
 	char	*ret;
 
-	if (s2 == NULL)
-		return (s1);
-	i = 0;
 	ret = NULL;
+	if (s2 == NULL)
+	{
+		ret = (ft_substr(s1, 0, ft_strlen(s1)));
+		ft_free(&s1);
+		return (ret); 
+	}
+	i = 0;
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	len = len_s1 + len_s2;
@@ -82,5 +83,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 		subs[j] = '\0';
 	}
+	// system("leaks main | grep \"leaked bytes\"");
 	return (subs);
 }
