@@ -6,46 +6,33 @@
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 14:21:41 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/09 14:13:13 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/11 17:55:32 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./get_next_line.h"
+#include "./get_next_line.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	len;
-	size_t	len_s1;
-	size_t	len_s2;
 	char	*ret;
+	char	*cp_ret;
+	char	*cp_s;
 
-	ret = NULL;
 	if (s2 == NULL)
-	{
-		ret = (ft_substr(s1, 0, ft_strlen(s1)));
-		ft_free(&s1);
-		return (ret); 
-	}
-	i = 0;
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	len = len_s1 + len_s2;
-	ret = malloc(sizeof(char) * (int)len + 1);
+		return (s1);
+	if (s1 == NULL)
+		return (s2);
+	ret = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!ret)
 		return (NULL);
-	while (i < len_s1)
-	{
-		ret[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while ((i + len_s1) < len && len_s2)
-	{
-		ret[i + (int)len_s1] = s2[i];
-		i++;
-	}
-	ret[len] = '\0';
+	cp_ret = ret;
+	cp_s = s1;
+	while (*cp_s)
+		*cp_ret++ = *cp_s++;
+	cp_s = s2;
+	while (*cp_s)
+		*cp_ret++ = *cp_s++;
+	*cp_ret = '\0';
 	ft_free(&s1);
 	ft_free(&s2);
 	return (ret);
@@ -83,6 +70,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 		subs[j] = '\0';
 	}
-	// system("leaks main | grep \"leaked bytes\"");
 	return (subs);
 }

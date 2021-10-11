@@ -6,18 +6,14 @@
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 20:13:06 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/06 16:58:51 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/11 21:01:31 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
 
 size_t	ft_strlen(const char *s);
 void	ft_free(char **to_free);
@@ -25,4 +21,4 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
-# endif
+#endif
