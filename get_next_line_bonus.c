@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:40:09 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/12 15:01:42 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/12 15:13:44 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./get_next_line.h"
+#include "./get_next_line_bonus.h"
 
 void	buf_scroll(char *buf, size_t i)
 {
@@ -42,27 +42,27 @@ void	ft_free(char **to_free)
 char	*get_buf(int fd)
 {
 	ssize_t		n;
-	static char	*buf = NULL;
+	static char	*buf[10240];
 
 	n = 0;
 	if (fd < 0 || fd > 10240 || BUFFER_SIZE < 1)
 		return (NULL);
-	if (buf == NULL)
+	if (buf[fd] == NULL)
 	{
-		buf = malloc(BUFFER_SIZE + 1);
-		buf[0] = '\0';
+		buf[fd] = malloc(BUFFER_SIZE + 1);
+		buf[fd][0] = '\0';
 	}
-	if (*buf == '\0')
+	if (*buf[fd] == '\0')
 	{
-		n = read(fd, buf, BUFFER_SIZE);
-		if (n <= 0 && buf != NULL)
+		n = read(fd, buf[fd], BUFFER_SIZE);
+		if (n <= 0 && buf[fd] != NULL)
 		{
-			ft_free(&buf);
+			ft_free(&buf[fd]);
 			return (NULL);
 		}
-		buf[n] = '\0';
+		buf[fd][n] = '\0';
 	}
-	return (buf);
+	return (buf[fd]);
 }
 
 char	*get_next_line(int fd)
