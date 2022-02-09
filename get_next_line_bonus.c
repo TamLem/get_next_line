@@ -6,11 +6,11 @@
 /*   By: tlemma <tlemma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 17:40:09 by tlemma            #+#    #+#             */
-/*   Updated: 2021/10/12 15:13:44 by tlemma           ###   ########.fr       */
+/*   Updated: 2021/10/28 16:05:13 by tlemma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./get_next_line_bonus.h"
+#include "get_next_line_bonus.h"
 
 void	buf_scroll(char *buf, size_t i)
 {
